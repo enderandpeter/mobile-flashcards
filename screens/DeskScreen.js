@@ -9,6 +9,8 @@ import {
   View,
 } from 'react-native';
 
+import { MonoText } from '../components/StyledText';
+
 export default class DeskScreen extends React.Component {
   static navigationOptions = {
     header: null,
@@ -18,7 +20,8 @@ export default class DeskScreen extends React.Component {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
+          <View style={styles.emptyContainer}>
+            <Text>Press <Text style={{fontStyle: 'italic'}}>Add Deck</Text> to add a deck!</Text>
           </View>
         </ScrollView>
       </View>
@@ -32,11 +35,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   contentContainer: {
-    paddingTop: 30,
-  },
-  welcomeContainer: {
+    flex: 1,
+    flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
+    justifyContent: 'center'
+  },
+  emptyContainer: {
+
   },
 });
