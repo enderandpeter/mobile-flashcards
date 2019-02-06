@@ -1,3 +1,4 @@
+import Colors from '../constants/Colors';
 import React from 'react';
 import {
   Image,
@@ -9,9 +10,12 @@ import {
   View,
 } from 'react-native';
 
-export default class DeskScreen extends React.Component {
+export default class DeckScreen extends React.Component {
   static navigationOptions = {
-    header: null,
+    headerTintColor: Colors.headerTintColor,
+    headerStyle: {
+      backgroundColor: Colors.headerStyle.backgroundColor,
+    }
   };
 
   render() {

@@ -11,4 +11,9 @@ export default {
   warningText: '#666804',
   noticeBackground: tintColor,
   noticeText: '#fff',
+  statusBar: '#00f',
+  headerTintColor: '#fff',
+  headerStyle: {
+    backgroundColor: '#00f',
+  }
 };
