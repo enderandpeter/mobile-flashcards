@@ -1,8 +1,14 @@
 import Colors from './constants/Colors';
 import { AppLoading, Constants, Font, Icon } from 'expo';
+import middleware from './middleware';
+import AppNavigator from './navigation/AppNavigator';
 import React from 'react';
 import { StatusBar, StyleSheet, View } from 'react-native';
-import AppNavigator from './navigation/AppNavigator';
+import { Provider } from 'react-redux';
+import reducer from './reducers';
+import { createStore } from 'redux';
+
+const store = createStore(reducer, middleware);
 
 function AppStatusBar ({backgroundColor, ...props}) {
   return (
@@ -18,7 +24,7 @@ export default class App extends React.Component {
   };
 
   render() {
-    if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
+    if (!(this.state.isLoadingComplete || this.props.skipLoadingScreen)) {
       return (
         <AppLoading
           startAsync={this._loadResourcesAsync}
@@ -27,10 +33,12 @@ export default class App extends React.Component {
       );
     } else {
       return (
-        <View style={styles.container}>
-          <AppStatusBar backgroundColor={Colors.statusBar} barStyle="light-content" />
-          <AppNavigator />
-        </View>
+        <Provider store={store}>
+          <View style={styles.container}>
+            <AppStatusBar backgroundColor={Colors.statusBar} barStyle="light-content" />
+            <AppNavigator />
+          </View>
+        </Provider>
       );
     }
   }
