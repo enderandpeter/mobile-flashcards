@@ -37,12 +37,12 @@ class DeckScreen extends Component {
                             0;
 
                       const cardsNoun = numOfCards === 1 ? 'card' : 'cards';
-                      return <View style={styles.item} key={deckId}>
-                        <TouchableOpacity style={{alignItems: 'center'}}>
-                          <Text style={styles.itemHeading}>{deckId}</Text>
-                          <Text>{`${numOfCards} ${cardsNoun}`}</Text>
-                        </TouchableOpacity>
-                      </View>;
+                      return <TouchableOpacity style={styles.item} key={deckId}>
+                          <View style={{alignItems: 'center'}}>
+                            <Text style={styles.itemHeading}>{deckId}</Text>
+                            <Text>{`${numOfCards} ${cardsNoun}`}</Text>
+                          </View>
+                        </TouchableOpacity>;
                     })
               :
                   <Text>Press <Text style={{fontStyle: 'italic'}}>Add Deck</Text> to add a deck!</Text>
