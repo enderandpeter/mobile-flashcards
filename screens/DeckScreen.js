@@ -20,16 +20,30 @@ class DeckScreen extends Component {
 
   componentDidMount() {
     this.props.dispatch(getDecks());
-  };
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+        <ScrollView style={styles.container} contentContainerStyle={this.props.decks ? null : styles.centered}>
           <View>
             {
               this.props.decks ?
-                  <Text>{JSON.stringify(this.props.decks)}</Text>
+                    Object.keys(this.props.decks).map((deckId) => {
+                      const numOfCards = this.props.decks[deckId].questions
+                          ?
+                            this.props.decks[deckId].questions.length
+                          :
+                            0;
+
+                      const cardsNoun = numOfCards === 1 ? 'card' : 'cards';
+                      return <View style={styles.item} key={deckId}>
+                        <TouchableOpacity style={{alignItems: 'center'}}>
+                          <Text style={styles.itemHeading}>{deckId}</Text>
+                          <Text>{`${numOfCards} ${cardsNoun}`}</Text>
+                        </TouchableOpacity>
+                      </View>;
+                    })
               :
                   <Text>Press <Text style={{fontStyle: 'italic'}}>Add Deck</Text> to add a deck!</Text>
             }
@@ -53,10 +67,30 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  contentContainer: {
+  centered: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  item: {
+    backgroundColor: Colors.itemBackground,
+    borderRadius: 16,
+    padding: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 17,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowRadius: 3,
+    shadowOpacity: 0.8,
+    shadowColor: 'rgba(0, 0, 0, 0.24)',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+  },
+  itemHeading: {
+    fontSize: 30
   }
 });

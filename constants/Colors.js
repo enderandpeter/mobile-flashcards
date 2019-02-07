@@ -15,5 +15,6 @@ export default {
   headerTintColor: '#fff',
   headerStyle: {
     backgroundColor: '#00f',
-  }
+  },
+  itemBackground: '#fff'
 };
