@@ -1,10 +1,18 @@
+import TabBarIcon from '../components/TabBarIcon';
+import { ExpoLinksView } from '@expo/samples';
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
-import { ExpoLinksView } from '@expo/samples';
 
 export default class AddDeckScreen extends React.Component {
   static navigationOptions = {
-    title: 'Links',
+    title: 'Add Deck',
+    tabBarLabel: 'Add Deck',
+    tabBarIcon: ({ focused }) => (
+        <TabBarIcon
+            focused={focused}
+            name='ios-add-circle'
+        />
+    )
   };
 
   render() {

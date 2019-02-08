@@ -12,7 +12,11 @@ import {
 import { connect } from 'react-redux';
 
 class DeckScreen extends Component {
+  constructor(props){
+    super(props);
+  }
   static navigationOptions = {
+      title: 'Decks',
       tabBarLabel: 'Decks',
       tabBarIcon: ({ focused }) => (
         <TabBarIcon
@@ -24,6 +28,13 @@ class DeckScreen extends Component {
 
   componentDidMount() {
     this.props.dispatch(getDecks());
+  }
+
+  handleDeckClick( { deckId }) {
+    this.props.navigation.navigate(
+        'DeckView',
+        { deckId }
+    );
   }
 
   render() {
@@ -41,7 +52,7 @@ class DeckScreen extends Component {
                             0;
 
                       const cardsNoun = numOfCards === 1 ? 'card' : 'cards';
-                      return <TouchableOpacity style={styles.item} key={deckId}>
+                      return <TouchableOpacity style={styles.item} key={deckId} onPress={this.handleDeckClick.bind(this, { deckId })}>
                           <View style={{alignItems: 'center'}}>
                             <Text style={styles.itemHeading}>{deckId}</Text>
                             <Text>{`${numOfCards} ${cardsNoun}`}</Text>
