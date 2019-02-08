@@ -11,6 +11,11 @@ export default createAppContainer(createStackNavigator(
       },
     },
     {
-      headerMode: 'none'
+      defaultNavigationOptions: {
+        headerTintColor: Colors.headerTintColor,
+        headerStyle: {
+          backgroundColor: Colors.headerStyle.backgroundColor,
+        }
+      }
     }
 ));

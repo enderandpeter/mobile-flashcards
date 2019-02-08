@@ -1,4 +1,5 @@
 import { getDecks } from "../actions/decks";
+import TabBarIcon from '../components/TabBarIcon';
 import Colors from '../constants/Colors';
 import React, { Component } from 'react';
 import {
@@ -12,10 +13,13 @@ import { connect } from 'react-redux';
 
 class DeckScreen extends Component {
   static navigationOptions = {
-      headerTintColor: Colors.headerTintColor,
-      headerStyle: {
-        backgroundColor: Colors.headerStyle.backgroundColor,
-      }
+      tabBarLabel: 'Decks',
+      tabBarIcon: ({ focused }) => (
+        <TabBarIcon
+            focused={focused}
+            name='ios-albums'
+        />
+      )
   };
 
   componentDidMount() {
