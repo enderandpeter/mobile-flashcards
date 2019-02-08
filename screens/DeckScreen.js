@@ -12,10 +12,10 @@ import { connect } from 'react-redux';
 
 class DeckScreen extends Component {
   static navigationOptions = {
-    headerTintColor: Colors.headerTintColor,
-    headerStyle: {
-      backgroundColor: Colors.headerStyle.backgroundColor,
-    }
+      headerTintColor: Colors.headerTintColor,
+      headerStyle: {
+        backgroundColor: Colors.headerStyle.backgroundColor,
+      }
   };
 
   componentDidMount() {
