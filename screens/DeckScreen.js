@@ -1,4 +1,5 @@
-import { getDecks } from "../actions/decks";
+import { getDecks } from '../actions/decks';
+import { DeckHeadingText } from '../components/StyledText';
 import TabBarIcon from '../components/TabBarIcon';
 import Colors from '../constants/Colors';
 import React, { Component } from 'react';
@@ -54,7 +55,7 @@ class DeckScreen extends Component {
                       const cardsNoun = numOfCards === 1 ? 'card' : 'cards';
                       return <TouchableOpacity style={styles.item} key={deckId} onPress={this.handleDeckClick.bind(this, { deckId })}>
                           <View style={{alignItems: 'center'}}>
-                            <Text style={styles.itemHeading}>{deckId}</Text>
+                            <DeckHeadingText>{deckId}</DeckHeadingText>
                             <Text>{`${numOfCards} ${cardsNoun}`}</Text>
                           </View>
                         </TouchableOpacity>;
@@ -104,8 +105,5 @@ const styles = StyleSheet.create({
       width: 0,
       height: 3
     },
-  },
-  itemHeading: {
-    fontSize: 30
   }
 });

@@ -16,5 +16,8 @@ export default {
   headerStyle: {
     backgroundColor: '#00f',
   },
-  itemBackground: '#fff'
+  itemBackground: '#fff',
+  addCardBackground: 'white',
+  startQuizBackground: 'lightblue',
+  startQuizText: 'white'
 };
