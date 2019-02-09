@@ -1,4 +1,4 @@
-import { DeckPageHeadingText } from '../components/StyledText';
+import { DeckPageHeadingText, LargeButtonText } from '../components/StyledText';
 import Colors from "../constants/Colors";
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -17,12 +17,13 @@ class DeckView extends Component {
     render(){
         return <View style={styles.container}>
             <DeckPageHeadingText>{this.props.deckId}</DeckPageHeadingText>
+            <Text>{`${this.props.numOfCards} ${this.props.cardsNoun}`}</Text>
             <View style={{marginTop: '20%'}}>
                 <TouchableOpacity style={[styles.largeButton, {backgroundColor: Colors.addCardBackground}]}>
-                    <Text style={styles.largeButtonText}>Add Card</Text>
+                    <LargeButtonText>Add Card</LargeButtonText>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.largeButton, {backgroundColor: Colors.startQuizBackground}]}>
-                    <Text style={styles.largeButtonText}>Start Quiz</Text>
+                    <LargeButtonText>Start Quiz</LargeButtonText>
                 </TouchableOpacity>
             </View>
         </View>;
@@ -30,10 +31,12 @@ class DeckView extends Component {
 }
 
 const mapStateToProps = (state, { navigation }) => {
-    const { deckId } = navigation.state.params;
+    const { deckId, numOfCards, cardsNoun } = navigation.state.params;
 
     return {
         deckId,
+        numOfCards,
+        cardsNoun
     };
 };
 
@@ -43,9 +46,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center'
-    },
-    largeButtonText: {
-        fontSize: 30
     },
     largeButton: {
         borderRadius: 16,

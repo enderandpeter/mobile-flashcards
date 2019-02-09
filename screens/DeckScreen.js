@@ -31,10 +31,10 @@ class DeckScreen extends Component {
     this.props.dispatch(getDecks());
   }
 
-  handleDeckClick( { deckId }) {
+  handleDeckClick( deckData ) {
     this.props.navigation.navigate(
         'DeckView',
-        { deckId }
+        deckData
     );
   }
 
@@ -53,7 +53,11 @@ class DeckScreen extends Component {
                             0;
 
                       const cardsNoun = numOfCards === 1 ? 'card' : 'cards';
-                      return <TouchableOpacity style={styles.item} key={deckId} onPress={this.handleDeckClick.bind(this, { deckId })}>
+                      return <TouchableOpacity
+                                style={styles.item}
+                                key={deckId}
+                                onPress={this.handleDeckClick.bind(this, { deckId, numOfCards, cardsNoun })}
+                             >
                           <View style={{alignItems: 'center'}}>
                             <DeckHeadingText>{deckId}</DeckHeadingText>
                             <Text>{`${numOfCards} ${cardsNoun}`}</Text>

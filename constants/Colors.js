@@ -19,5 +19,8 @@ export default {
   itemBackground: '#fff',
   addCardBackground: 'white',
   startQuizBackground: 'lightblue',
-  startQuizText: 'white'
+  startQuizText: 'white',
+  flipCardText: 'red',
+  correctButtonBackground: 'green',
+  incorrectButtonBackground: 'red',
 };

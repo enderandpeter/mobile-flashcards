@@ -19,6 +19,24 @@ export class DeckPageHeadingText extends Component {
   }
 }
 
+export class LargeButtonText extends Component {
+  render() {
+    return <Text {...this.props} style={[this.props.style, styles.largeButtonText]} />;
+  }
+}
+
+export class QuestionAndAnswerText extends Component {
+  render() {
+    return <Text {...this.props} style={[this.props.style, styles.questionAndAnswer]} />;
+  }
+}
+
+export class FlipCardText extends Component {
+  render() {
+    return <Text {...this.props} style={[this.props.style, styles.questionAndAnswer]} />;
+  }
+}
+
 const styles = StyleSheet.create({
   itemHeading: {
     fontSize: 30
@@ -26,5 +44,14 @@ const styles = StyleSheet.create({
   deckPageHeading: {
     fontSize: 42,
     marginTop: '20%'
+  },
+  largeButtonText: {
+    fontSize: 30
+  },
+  questionAndAnswer: {
+    fontSize: 25
+  },
+  flipCardText: {
+
   }
 });

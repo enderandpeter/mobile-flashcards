@@ -15,7 +15,12 @@ function setDummyData () {
                     question: 'Where do you make Ajax requests in React?',
                     answer: 'The componentDidMount lifecycle event'
                 }
-            ]
+            ],
+            quiz: {
+                cardIndex: 0,
+                show: 'question',
+                score: 0
+            }
         },
         JavaScript: {
             title: 'JavaScript',
@@ -24,7 +29,12 @@ function setDummyData () {
                     question: 'What is a closure?',
                     answer: 'The combination of a function and the lexical environment within which that function was declared.'
                 }
-            ]
+            ],
+            quiz: {
+                cardIndex: 0,
+                show: 'question',
+                score: 0
+            }
         }
     };
 
