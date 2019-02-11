@@ -4,6 +4,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import Colors from '../constants/Colors';
 import React, { Component } from 'react';
 import {
+  AsyncStorage,
   ScrollView,
   StyleSheet,
   Text,
@@ -13,9 +14,6 @@ import {
 import { connect } from 'react-redux';
 
 class DeckScreen extends Component {
-  constructor(props){
-    super(props);
-  }
   static navigationOptions = {
       title: 'Decks',
       tabBarLabel: 'Decks',

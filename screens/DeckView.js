@@ -1,5 +1,5 @@
 import { DeckPageHeadingText, LargeButtonText } from '../components/StyledText';
-import Colors from "../constants/Colors";
+import Colors from '../constants/Colors';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -14,6 +14,13 @@ class DeckView extends Component {
     static navigationOptions = ({navigation}) => ({
        title: navigation.state.params.deckId
     })
+    handleStartQuizClick() {
+        const { deckId } = this.props;
+        this.props.navigation.navigate(
+            'StartQuiz',
+            { deckId }
+        );
+    }
     render(){
         return <View style={styles.container}>
             <DeckPageHeadingText>{this.props.deckId}</DeckPageHeadingText>
@@ -22,7 +29,10 @@ class DeckView extends Component {
                 <TouchableOpacity style={[styles.largeButton, {backgroundColor: Colors.addCardBackground}]}>
                     <LargeButtonText>Add Card</LargeButtonText>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.largeButton, {backgroundColor: Colors.startQuizBackground}]}>
+                <TouchableOpacity
+                    style={[styles.largeButton, {backgroundColor: Colors.startQuizBackground}]}
+                    onPress={this.handleStartQuizClick.bind(this)}
+                >
                     <LargeButtonText>Start Quiz</LargeButtonText>
                 </TouchableOpacity>
             </View>

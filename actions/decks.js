@@ -18,3 +18,16 @@ export const getDecks = () => (
             });
     }
 );
+
+export const flipCard = ({ deckId, side }) => (
+    (dispatch) => {
+        return API.flipCard({ deckId, side })
+            .then(() => API.getDecks())
+            .then((decks) => {
+                /*
+                `decks` will be string data from AsyncStorage
+                 */
+                dispatch(getDecksAction(JSON.parse(decks)));
+            });
+    }
+);

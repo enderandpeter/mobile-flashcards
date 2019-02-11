@@ -1,3 +1,4 @@
+import { flipCard } from '../actions/decks';
 import { QuestionAndAnswerText, LargeButtonText, FlipCardText } from '../components/StyledText';
 import Colors from '../constants/Colors';
 import React, { Component } from 'react';
@@ -14,6 +15,10 @@ class StartQuiz extends Component {
     static navigationOptions = ({navigation}) => ({
        title: `${navigation.state.params.deckId} Quiz`
     })
+    handleToggleQuestionAnswer(){
+        const { deckId } = this.props;
+        this.props.dispatch(flipCard({ deckId }));
+    }
     render(){
         return <View style={styles.container}>
             <View style={styles.progressContainer}>
@@ -29,15 +34,20 @@ class StartQuiz extends Component {
                             this.props.answer
                     }
                 </QuestionAndAnswerText>
-                <FlipCardText>
-                    {
-                        this.props.show === 'question'
-                            ?
-                            'Answer'
-                            :
-                            'Question'
-                    }
-                </FlipCardText>
+                <TouchableOpacity
+                    style={styles.toggleContainer}
+                    onPress={this.handleToggleQuestionAnswer.bind(this)}
+                >
+                    <FlipCardText>
+                        {
+                            this.props.show === 'question'
+                                ?
+                                'Answer'
+                                :
+                                'Question'
+                        }
+                    </FlipCardText>
+                </TouchableOpacity>
             </View>
             <TouchableOpacity style={[styles.largeButton, {backgroundColor: Colors.correctButtonBackground}]}>
                 <LargeButtonText>Correct</LargeButtonText>
@@ -49,15 +59,24 @@ class StartQuiz extends Component {
     }
 }
 
-const mapStateToProps = ({ questions, quiz }, { navigation }) => {
-    const { deckId, numOfCards, cardIndex } = navigation.state.params;
+const mapStateToProps = ({ decks }, { navigation }) => {
+    const { deckId } = navigation.state.params;
+
+    const questions = decks[deckId].questions;
+    const numOfCards = Object.keys(questions).length;
+    const quiz = decks[deckId].quiz;
+    const cardIndex = quiz.cardIndex;
+    const question = questions[cardIndex].question;
+    const answer = questions[cardIndex].answer;
+    const show = quiz.show;
 
     return {
         deckId,
         numOfCards,
         cardIndex,
-        questions,
-        quiz
+        question,
+        answer,
+        show
     };
 };
 
@@ -66,15 +85,13 @@ export default connect(mapStateToProps)(StartQuiz);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center'
     },
     progressContainer: {
 
     },
-    mainContainer: {
-
+    toggleContainer: {
+        alignItems: 'center'
     },
     largeButton: {
         borderRadius: 16,

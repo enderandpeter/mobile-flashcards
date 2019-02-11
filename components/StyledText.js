@@ -1,3 +1,4 @@
+import Colors from '../constants/Colors';
 import React, { Component } from 'react';
 import { Text, StyleSheet } from 'react-native';
 
@@ -33,7 +34,7 @@ export class QuestionAndAnswerText extends Component {
 
 export class FlipCardText extends Component {
   render() {
-    return <Text {...this.props} style={[this.props.style, styles.questionAndAnswer]} />;
+    return <Text {...this.props} style={[this.props.style, styles.flipCardText]} />;
   }
 }
 
@@ -49,9 +50,10 @@ const styles = StyleSheet.create({
     fontSize: 30
   },
   questionAndAnswer: {
-    fontSize: 25
+    fontSize: 25,
   },
   flipCardText: {
-
+    fontSize: 16,
+    color: Colors.flipCardText
   }
 });
