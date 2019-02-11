@@ -15,9 +15,24 @@ class StartQuiz extends Component {
     static navigationOptions = ({navigation}) => ({
        title: `${navigation.state.params.deckId} Quiz`
     })
+    state = {
+        qaText: this.props[this.props.show],
+        qaButtonText: this.props.show === 'question' ? 'Answer' : 'Question',
+        show: this.props.show
+    }
     handleToggleQuestionAnswer(){
         const { deckId } = this.props;
-        this.props.dispatch(flipCard({ deckId }));
+        this.props.dispatch(flipCard({ deckId }))
+            .then((deck) => {
+                this.setState((currentState) => {
+                    const show = currentState.show === 'question' ? 'answer' : 'question';
+                    return {
+                        qaText: this.props[show],
+                        qaButtonText: show === 'question' ? 'Answer' : 'Question',
+                        show
+                    };
+                });
+            });
     }
     render(){
         return <View style={styles.container}>
@@ -26,26 +41,14 @@ class StartQuiz extends Component {
             </View>
             <View style={styles.mainContainer}>
                 <QuestionAndAnswerText>
-                    {
-                        this.props.show === 'question'
-                        ?
-                            this.props.question
-                        :
-                            this.props.answer
-                    }
+                    {this.state.qaText}
                 </QuestionAndAnswerText>
                 <TouchableOpacity
                     style={styles.toggleContainer}
                     onPress={this.handleToggleQuestionAnswer.bind(this)}
                 >
                     <FlipCardText>
-                        {
-                            this.props.show === 'question'
-                                ?
-                                'Answer'
-                                :
-                                'Question'
-                        }
+                        {this.state.qaButtonText}
                     </FlipCardText>
                 </TouchableOpacity>
             </View>

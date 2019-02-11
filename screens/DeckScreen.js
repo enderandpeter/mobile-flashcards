@@ -43,7 +43,7 @@ class DeckScreen extends Component {
           <View>
             {
               this.props.decks ?
-                    Object.keys(this.props.decks).map((deckId) => {
+                    Object.keys(this.props.decks).sort().map((deckId) => {
                       const numOfCards = this.props.decks[deckId].questions
                           ?
                             this.props.decks[deckId].questions.length
