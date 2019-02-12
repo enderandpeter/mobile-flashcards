@@ -19,7 +19,8 @@ function setDummyData () {
             quiz: {
                 cardIndex: 0,
                 show: 'question',
-                score: 0
+                score: 0,
+                complete: false
             }
         },
         JavaScript: {
@@ -33,7 +34,8 @@ function setDummyData () {
             quiz: {
                 cardIndex: 0,
                 show: 'question',
-                score: 0
+                score: 0,
+                complete: false
             }
         }
     };

@@ -25,9 +25,9 @@ class StartQuiz extends Component {
         this.props.dispatch(flipCard({ deckId }))
             .then((deck) => {
                 this.setState((currentState) => {
-                    const show = currentState.show === 'question' ? 'answer' : 'question';
+                    const show = deck.quiz.show;
                     return {
-                        qaText: this.props[show],
+                        qaText: deck.questions[deck.quiz.cardIndex][show],
                         qaButtonText: show === 'question' ? 'Answer' : 'Question',
                         show
                     };

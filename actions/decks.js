@@ -22,18 +22,14 @@ export const getDecks = () => (
 /**
  *
  * @param deckId
- * @param side
+ * @param side An optional side, "question" or "answer"
  * @returns {function(*): PromiseLike<T | never>} A Promise whose payload is
  * the deck that had a card flipped.
  */
 export const flipCard = ({ deckId, side }) => (
     (dispatch) => {
         return API.flipCard({ deckId, side })
-            .then(() => API.getDecks())
             .then((decks) => {
-                /*
-                `decks` will be string data from AsyncStorage
-                 */
                 const decksData = JSON.parse(decks);
                 dispatch(getDecksAction(decksData));
 
@@ -41,3 +37,16 @@ export const flipCard = ({ deckId, side }) => (
             });
     }
 );
+
+/**
+ *
+ * @param deckId
+ * @param nextIndex An optional specified card (question) index
+ * @returns {Function}
+ */
+export const nextCard = ({ deckId, nextIndex }) => (
+    (dispatch) => {
+        return API.nextCard({ deckId, nextIndex })
+            .then();
+    }
+)
