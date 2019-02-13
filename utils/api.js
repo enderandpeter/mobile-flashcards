@@ -44,15 +44,17 @@ export function flipCard ( { deckId, side }) {
 /**
  *
  * @param deckId
- * @param side Optionally specify a card index.
+ * @param nextIndex Optionally specify a card index.
+ * @param correct Whether or not the answer was correct, which will add to the score.
  * @returns {*|PromiseLike<T | never>|Promise<T | never>}
  */
-export function nextCard ( { deckId, nextIndex }) {
+export function nextCard ( { deckId, nextIndex, correct } ) {
     return this.getDeck(deckId)
-        .then((deck) => {
-            AsyncStorage.getItem(DECKS_STORAGE_KEY)
-                .then(async (decks) => {
+        .then(async (deck) => {
+            return await AsyncStorage.getItem(DECKS_STORAGE_KEY)
+                .then( (decks) => {
                     const decksData = JSON.parse(decks);
+                    const show = 'question';
 
                     let complete = false;
 
@@ -82,11 +84,15 @@ export function nextCard ( { deckId, nextIndex }) {
                             quiz: {
                                 ...decksData[deckId].quiz,
                                 complete,
-                                cardIndex
+                                cardIndex,
+                                show,
+                                score: correct ? decksData[deckId].quiz.score + 1 : decksData[deckId].quiz.score
                             }
                         }
                     };
-                    await AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(newDecks));
+
+                    return AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(newDecks))
+                        .then(() => this.getDeck(deckId)).then((deck) => deck);
                 });
         });
 }

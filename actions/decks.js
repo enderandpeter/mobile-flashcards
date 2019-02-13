@@ -49,9 +49,13 @@ export const flipCard = ({ deckId, side }) => (
  * @param nextIndex An optional specified card (question) index
  * @returns {Function}
  */
-export const nextCard = ({ deckId, nextIndex }) => (
+export const nextCard = ({ deckId, nextIndex, correct }) => (
     (dispatch) => {
-        return API.nextCard({ deckId, nextIndex })
-            .then();
+        return API.nextCard({ deckId, nextIndex, correct })
+            .then((deck) => {
+                dispatch(updateDeckAction(deck));
+
+                return deck;
+            });
     }
 )

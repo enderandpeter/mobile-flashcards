@@ -1,4 +1,4 @@
-import { flipCard } from '../actions/decks';
+import { flipCard, nextCard } from '../actions/decks';
 import { QuestionAndAnswerText, LargeButtonText, FlipCardText } from '../components/StyledText';
 import Colors from '../constants/Colors';
 import React, { Component } from 'react';
@@ -35,6 +35,24 @@ class StartQuiz extends Component {
             })
             .catch((error) => console.error(error));
     }
+    handleNextCardButtons({ correct }){
+        const { deckId } = this.props;
+
+        this.props.dispatch(nextCard({ deckId, correct }))
+            .then((deck) => {
+                if(!deck.quiz.complete){
+                    this.setState((currentState) => {
+                        const show = 'question';
+                        return {
+                            qaText: deck.questions[deck.quiz.cardIndex].question,
+                            qaButtonText: 'Answer',
+                            show
+                        };
+                    });
+                }
+            })
+            .catch((error) => console.error(error));
+    }
     render(){
         return <View style={styles.container}>
             <View style={styles.progressContainer}>
@@ -53,10 +71,16 @@ class StartQuiz extends Component {
                     </FlipCardText>
                 </TouchableOpacity>
             </View>
-            <TouchableOpacity style={[styles.largeButton, {backgroundColor: Colors.correctButtonBackground}]}>
+            <TouchableOpacity
+                style={[styles.largeButton, {backgroundColor: Colors.correctButtonBackground}]}
+                onPress={this.handleNextCardButtons.bind(this, { 'correct': true})}
+            >
                 <LargeButtonText>Correct</LargeButtonText>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.largeButton, {backgroundColor: Colors.incorrectButtonBackground}]}>
+            <TouchableOpacity
+                style={[styles.largeButton, {backgroundColor: Colors.incorrectButtonBackground}]}
+                onPress={this.handleNextCardButtons.bind(this, { 'correct': false})}
+            >
                 <LargeButtonText>Incorrect</LargeButtonText>
             </TouchableOpacity>
         </View>;
