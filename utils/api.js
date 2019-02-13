@@ -36,7 +36,7 @@ export function flipCard ( { deckId, side }) {
                         }
                     };
                     return AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(newDecks))
-                        .then(() => this.getDecks().then((decks) => decks));
+                        .then(() => this.getDeck(deckId).then((deck) => deck));
                 });
         });
 }

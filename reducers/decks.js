@@ -1,4 +1,4 @@
-import { GET_DECKS } from '../actions/decks';
+import { GET_DECKS, UPDATE_DECK } from '../actions/decks';
 
 const decks = (state = {}, action) => {
     switch(action.type) {
@@ -6,6 +6,13 @@ const decks = (state = {}, action) => {
             return {
                 ...state,
                 ...action.decks
+            };
+        case UPDATE_DECK :
+            return {
+                ...state,
+                [action.deck.title]: {
+                    ...action.deck
+                }
             };
         default :
             return state;

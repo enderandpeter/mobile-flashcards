@@ -32,7 +32,8 @@ class StartQuiz extends Component {
                         show
                     };
                 });
-            });
+            })
+            .catch((error) => console.error(error));
     }
     render(){
         return <View style={styles.container}>

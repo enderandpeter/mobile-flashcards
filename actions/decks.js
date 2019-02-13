@@ -1,10 +1,16 @@
 import * as API from '../utils/api';
 
 export const GET_DECKS = 'GET_DECKS';
+export const UPDATE_DECK = 'UPDATE_DECK';
 
 export const getDecksAction = (decks) => ({
     type: GET_DECKS,
     decks,
+});
+
+export const updateDeckAction = (deck) => ({
+    type: UPDATE_DECK,
+    deck,
 });
 
 export const getDecks = () => (
@@ -29,11 +35,10 @@ export const getDecks = () => (
 export const flipCard = ({ deckId, side }) => (
     (dispatch) => {
         return API.flipCard({ deckId, side })
-            .then((decks) => {
-                const decksData = JSON.parse(decks);
-                dispatch(getDecksAction(decksData));
+            .then((deck) => {
+                dispatch(updateDeckAction(deck));
 
-                return decksData[deckId];
+                return deck;
             });
     }
 );
