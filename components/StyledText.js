@@ -38,6 +38,12 @@ export class FlipCardText extends Component {
   }
 }
 
+export class ScoreHeadingText extends Component {
+  render() {
+    return <Text {...this.props} style={[this.props.style, styles.scoreHeadingText]} />;
+  }
+}
+
 export class ScoreText extends Component {
   render() {
     return <Text {...this.props} style={[this.props.style, styles.scoreText]} />;
@@ -61,6 +67,9 @@ const styles = StyleSheet.create({
   flipCardText: {
     fontSize: 16,
     color: Colors.flipCardText
+  },
+  scoreHeadingText: {
+    fontSize: 25
   },
   scoreText: {
     fontSize: 72,

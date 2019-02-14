@@ -59,3 +59,14 @@ export const nextCard = ({ deckId, nextIndex, correct }) => (
             });
     }
 )
+
+export const restartQuiz = ({ deckId }) => (
+    (dispatch) => {
+        return API.restartQuiz({ deckId })
+            .then((deck) => {
+                dispatch(updateDeckAction(deck));
+
+                return deck;
+            });
+    }
+)

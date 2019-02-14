@@ -1,5 +1,11 @@
-import { flipCard, nextCard } from '../actions/decks';
-import {QuestionAndAnswerText, LargeButtonText, FlipCardText, ScoreText} from '../components/StyledText';
+import { flipCard, nextCard, restartQuiz } from '../actions/decks';
+import {
+    QuestionAndAnswerText,
+    LargeButtonText,
+    FlipCardText,
+    ScoreText,
+    ScoreHeadingText
+} from '../components/StyledText';
 import Colors from '../constants/Colors';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -56,6 +62,25 @@ class StartQuiz extends Component {
             })
             .catch((error) => console.error(error));
     }
+    handleRestartQuiz(){
+        const { deckId } = this.props;
+
+        this.props.dispatch(restartQuiz({ deckId }))
+            .then((deck) => {
+                const { complete, score } = deck.quiz;
+                this.setState((currentState) => {
+                    const show = 'question';
+                    return {
+                        qaText: deck.questions[deck.quiz.cardIndex].question,
+                        qaButtonText: 'Answer',
+                        show,
+                        complete,
+                        score
+                    };
+                });
+            })
+            .catch((error) => console.error(error));
+    }
     qaView(){
         return <View style={styles.container}>
             <View style={styles.progressContainer}>
@@ -90,12 +115,13 @@ class StartQuiz extends Component {
     }
     completeView(){
         return <View style={styles.container}>
+            <ScoreHeadingText>You scored</ScoreHeadingText>
+            <ScoreText>{this.state.score}</ScoreText>
             <View>
-                <Text>You scored</Text>
-                <ScoreText>{this.state.score}</ScoreText>
-            </View>
-            <View>
-                <TouchableOpacity style={[styles.largeButton]}>
+                <TouchableOpacity
+                    style={[styles.largeButton]}
+                    onPress={this.handleRestartQuiz.bind(this)}
+                >
                     <LargeButtonText>Restart Quiz</LargeButtonText>
                 </TouchableOpacity>
             </View>

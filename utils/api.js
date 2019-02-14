@@ -100,7 +100,32 @@ export function nextCard ( { deckId, nextIndex, correct } ) {
 
 export function restartQuiz( { deckId } ){
     return this.getDeck(deckId)
-        .then((deck) => {
+        .then(async (deck) => {
+            return await AsyncStorage.getItem(DECKS_STORAGE_KEY)
+                .then((decks) => {
+                    const decksData = JSON.parse(decks);
 
+                    const complete = false;
+                    const score  = 0;
+                    const cardIndex = 0;
+                    const show = 'question';
+
+                    const newDecks = {
+                        ...decksData,
+                        [deckId]: {
+                            ...deck,
+                            quiz: {
+                                ...deck.quiz,
+                                complete,
+                                cardIndex,
+                                score,
+                                show
+                            }
+                        }
+                    };
+
+                    return AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(newDecks))
+                        .then(() => this.getDeck(deckId)).then((deck) => deck);
+                });
         });
 }
