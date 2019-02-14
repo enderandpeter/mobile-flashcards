@@ -28,9 +28,9 @@ export function flipCard ( { deckId, side }) {
                     const newDecks = {
                         ...decksData,
                         [deckId]: {
-                            ...decksData[deckId],
+                            ...deck,
                             quiz: {
-                                ...decksData[deckId].quiz,
+                                ...deck.quiz,
                                 show
                             }
                         }
@@ -56,23 +56,24 @@ export function nextCard ( { deckId, nextIndex, correct } ) {
                     const decksData = JSON.parse(decks);
                     const show = 'question';
 
-                    let complete = false;
+                    let { complete } = deck.quiz;
 
                     // Make sure cardIndex is definitely a number in case something weird happened.
                     let cardIndex = nextIndex
                         ?
                             Number.parseInt(cardIndex)
                         :
-                            Number.parseInt(decksData[deckId].quiz.cardIndex) + 1;
+                            Number.parseInt(deck.quiz.cardIndex) + 1;
                     if(isNaN(cardIndex)){
-                        cardIndex = isNaN(decksData[deckId].quiz.cardIndex) ? 0 : decksData[deckId].quiz.cardIndex;
+                        cardIndex = isNaN(deck.quiz.cardIndex) ? 0 : deck.quiz.cardIndex;
                     }
 
                     if(cardIndex < 0){
                         cardIndex = 0;
                     }
 
-                    if(cardIndex >= decksData[deckId].questions.length){
+                    // Quiz is complete once end of questions are reached
+                    if(cardIndex >= deck.questions.length){
                         cardIndex = 0;
                         complete = true;
                     }
@@ -80,13 +81,13 @@ export function nextCard ( { deckId, nextIndex, correct } ) {
                     const newDecks = {
                         ...decksData,
                         [deckId]: {
-                            ...decksData[deckId],
+                            ...deck,
                             quiz: {
-                                ...decksData[deckId].quiz,
+                                ...deck.quiz,
                                 complete,
                                 cardIndex,
                                 show,
-                                score: correct ? decksData[deckId].quiz.score + 1 : decksData[deckId].quiz.score
+                                score: correct ? deck.quiz.score + 1 : deck.quiz.score
                             }
                         }
                     };
@@ -94,5 +95,12 @@ export function nextCard ( { deckId, nextIndex, correct } ) {
                     return AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(newDecks))
                         .then(() => this.getDeck(deckId)).then((deck) => deck);
                 });
+        });
+}
+
+export function restartQuiz( { deckId } ){
+    return this.getDeck(deckId)
+        .then((deck) => {
+
         });
 }

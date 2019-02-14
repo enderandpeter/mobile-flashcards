@@ -1,5 +1,5 @@
 import { flipCard, nextCard } from '../actions/decks';
-import { QuestionAndAnswerText, LargeButtonText, FlipCardText } from '../components/StyledText';
+import {QuestionAndAnswerText, LargeButtonText, FlipCardText, ScoreText} from '../components/StyledText';
 import Colors from '../constants/Colors';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -18,7 +18,9 @@ class StartQuiz extends Component {
     state = {
         qaText: this.props[this.props.show],
         qaButtonText: this.props.show === 'question' ? 'Answer' : 'Question',
-        show: this.props.show
+        show: this.props.show,
+        score: this.props.score,
+        complete: this.props.complete
     }
     handleToggleQuestionAnswer(){
         const { deckId } = this.props;
@@ -40,20 +42,21 @@ class StartQuiz extends Component {
 
         this.props.dispatch(nextCard({ deckId, correct }))
             .then((deck) => {
-                if(!deck.quiz.complete){
-                    this.setState((currentState) => {
-                        const show = 'question';
-                        return {
-                            qaText: deck.questions[deck.quiz.cardIndex].question,
-                            qaButtonText: 'Answer',
-                            show
-                        };
-                    });
-                }
+                const { complete, score } = deck.quiz;
+                this.setState((currentState) => {
+                    const show = 'question';
+                    return {
+                        qaText: deck.questions[deck.quiz.cardIndex].question,
+                        qaButtonText: 'Answer',
+                        show,
+                        complete,
+                        score
+                    };
+                });
             })
             .catch((error) => console.error(error));
     }
-    render(){
+    qaView(){
         return <View style={styles.container}>
             <View style={styles.progressContainer}>
                 <Text>{this.props.cardIndex} / {this.props.numOfCards}</Text>
@@ -85,18 +88,35 @@ class StartQuiz extends Component {
             </TouchableOpacity>
         </View>;
     }
+    completeView(){
+        return <View style={styles.container}>
+            <View>
+                <Text>You scored</Text>
+                <ScoreText>{this.state.score}</ScoreText>
+            </View>
+            <View>
+                <TouchableOpacity style={[styles.largeButton]}>
+                    <LargeButtonText>Restart Quiz</LargeButtonText>
+                </TouchableOpacity>
+            </View>
+        </View>;
+    }
+    render(){
+        if(this.state.complete){
+            return this.completeView();
+        } else {
+            return this.qaView();
+        }
+    }
 }
 
 const mapStateToProps = ({ decks }, { navigation }) => {
     const { deckId } = navigation.state.params;
 
-    const questions = decks[deckId].questions;
+    const { questions, quiz } = decks[deckId];
     const numOfCards = Object.keys(questions).length;
-    const quiz = decks[deckId].quiz;
-    const cardIndex = quiz.cardIndex;
-    const question = questions[cardIndex].question;
-    const answer = questions[cardIndex].answer;
-    const show = quiz.show;
+    const { cardIndex, show, score, complete } = quiz;
+    const { question, answer} = questions[cardIndex];
 
     return {
         deckId,
@@ -104,7 +124,9 @@ const mapStateToProps = ({ decks }, { navigation }) => {
         cardIndex,
         question,
         answer,
-        show
+        show,
+        score,
+        complete
     };
 };
 

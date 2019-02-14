@@ -23,4 +23,5 @@ export default {
   flipCardText: 'red',
   correctButtonBackground: 'green',
   incorrectButtonBackground: 'red',
+  scoreColor: 'green'
 };
