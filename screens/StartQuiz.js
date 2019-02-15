@@ -19,7 +19,7 @@ import {
 
 class StartQuiz extends Component {
     static navigationOptions = ({navigation}) => ({
-       title: `${navigation.state.params.deckId} Quiz`
+       title: 'Quiz'
     })
     state = {
         qaText: this.props[this.props.show],
@@ -84,7 +84,7 @@ class StartQuiz extends Component {
     qaView(){
         return <View style={styles.container}>
             <View style={styles.progressContainer}>
-                <Text>{this.props.cardIndex} / {this.props.numOfCards}</Text>
+                <Text>{this.props.cardIndex + 1} / {this.props.numOfCards}</Text>
             </View>
             <View style={styles.mainContainer}>
                 <QuestionAndAnswerText>

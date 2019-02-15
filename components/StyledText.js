@@ -56,6 +56,12 @@ export class AddDeckHeaderText extends Component {
   }
 }
 
+export class AddCardHeaderText extends Component {
+  render() {
+    return <Text {...this.props} style={[this.props.style, styles.addCardHeaderText]} />;
+  }
+}
+
 export const styles = StyleSheet.create({
   itemHeading: {
     fontSize: 30
@@ -85,6 +91,7 @@ export const styles = StyleSheet.create({
   },
   questionAndAnswer: {
     fontSize: 25,
+    textAlign: 'center'
   },
   flipCardText: {
     fontSize: 16,
@@ -99,6 +106,12 @@ export const styles = StyleSheet.create({
   },
   addDeckHeaderText: {
     fontSize: 30,
-    paddingBottom: 20
+    paddingBottom: 20,
+    textAlign: 'center'
+  },
+  addCardHeaderText: {
+    fontSize: 30,
+    paddingBottom: 20,
+    textAlign: 'center'
   }
 });

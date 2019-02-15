@@ -1,4 +1,5 @@
 import Colors from '../constants/Colors';
+import AddCard from '../screens/AddCard';
 import DeckView from '../screens/DeckView';
 import StartQuiz from '../screens/StartQuiz';
 import MainTabNavigator from './MainTabNavigator';
@@ -15,7 +16,10 @@ export default createAppContainer(createStackNavigator(
       },
       StartQuiz: {
         screen: StartQuiz
-      }
+      },
+      AddCard: {
+        screen: AddCard
+      },
     },
     {
       defaultNavigationOptions: {

@@ -74,9 +74,32 @@ export const restartQuiz = ({ deckId }) => (
     }
 );
 
+/**
+ *
+ * @param title
+ * @returns {function(*): PromiseLike<T | never | never>}
+ */
 export const addDeck = ({ title }) => (
     (dispatch) => {
         return API.addDeck({ title })
+            .then((deck) => {
+                dispatch(updateDeckAction(deck));
+
+                return deck;
+            });
+    }
+);
+
+/**
+ *
+ * @param deckId
+ * @param question
+ * @param answer
+ * @returns {function(*): PromiseLike<T | never | never>}
+ */
+export const addCard = ({ deckId, question, answer }) => (
+    (dispatch) => {
+        return API.addCard({ deckId, question, answer })
             .then((deck) => {
                 dispatch(updateDeckAction(deck));
 

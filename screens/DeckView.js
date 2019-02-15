@@ -1,4 +1,4 @@
-import { DeckPageHeadingText, LargeButtonText } from '../components/StyledText';
+import { DeckPageHeadingText, LargeButtonText, styles as textStyles } from '../components/StyledText';
 import Colors from '../constants/Colors';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -14,6 +14,13 @@ class DeckView extends Component {
     static navigationOptions = ({navigation}) => ({
        title: navigation.state.params.deckId
     })
+    handleAddCardClick(){
+        const { deckId } = this.props;
+        this.props.navigation.navigate(
+            'AddCard',
+            { deckId }
+        );
+    }
     handleStartQuizClick() {
         const { deckId } = this.props;
         this.props.navigation.navigate(
@@ -25,16 +32,21 @@ class DeckView extends Component {
         return <View style={styles.container}>
             <DeckPageHeadingText>{this.props.deckId}</DeckPageHeadingText>
             <Text>{`${this.props.numOfCards} ${this.props.cardsNoun}`}</Text>
-            <View style={{marginTop: '20%'}}>
-                <TouchableOpacity style={[styles.largeButton, {backgroundColor: Colors.addCardBackground}]}>
+            <View>
+                <TouchableOpacity
+                    style={[textStyles.largeButton, {backgroundColor: Colors.addCardBackground}]}
+                    onPress={this.handleAddCardClick.bind(this)}
+                >
                     <LargeButtonText>Add Card</LargeButtonText>
                 </TouchableOpacity>
-                <TouchableOpacity
-                    style={[styles.largeButton, {backgroundColor: Colors.startQuizBackground}]}
-                    onPress={this.handleStartQuizClick.bind(this)}
-                >
-                    <LargeButtonText>Start Quiz</LargeButtonText>
-                </TouchableOpacity>
+                {
+                    this.props.numOfCards ? <TouchableOpacity
+                        style={[styles.largeButton, {backgroundColor: Colors.startQuizBackground}]}
+                        onPress={this.handleStartQuizClick.bind(this)}
+                    >
+                        <LargeButtonText>Start Quiz</LargeButtonText>
+                    </TouchableOpacity> : null
+                }
             </View>
         </View>;
     }
@@ -43,18 +55,21 @@ class DeckView extends Component {
 const mapStateToProps = ({ decks }, { navigation }) => {
     const { deckId } = navigation.state.params;
 
-    const numOfCards = decks[deckId].questions
+    const deck = decks[deckId];
+    const { questions } = deck;
+
+    const numOfCards = questions
         ?
-        decks[deckId].questions.length
+            questions.length
         :
-        0;
+            0;
 
     const cardsNoun = numOfCards === 1 ? 'card' : 'cards';
 
     return {
         deckId,
         numOfCards,
-        cardsNoun
+        cardsNoun,
     };
 };
 

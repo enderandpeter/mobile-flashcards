@@ -10,5 +10,5 @@ export default createBottomTabNavigator({
    },
    DeckAdd: {
      screen: AddDeckScreen
-   }
+    }
 });

@@ -88,9 +88,14 @@ export function nextCard ( { deckId, nextIndex, correct } ) {
         });
 }
 
+/**
+ *
+ * @param deckId
+ * @returns {*|PromiseLike<T | never>|Promise<T | never>}
+ */
 export function restartQuiz( { deckId } ){
     return this.getDeck(deckId)
-        .then(async (deck) => {
+        .then((deck) => {
             const complete = false;
             const score  = 0;
             const cardIndex = 0;
@@ -114,6 +119,11 @@ export function restartQuiz( { deckId } ){
         });
 }
 
+/**
+ *
+ * @param title
+ * @returns {PromiseLike<T | never>}
+ */
 export function addDeck({ title }){
     const newDeck = {
         [title]: {
@@ -130,4 +140,32 @@ export function addDeck({ title }){
 
     return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(newDeck))
         .then(() => this.getDeck(title)).then( (deck) => deck);
+}
+
+/**
+ *
+ * @param deckId
+ * @param question
+ * @param answer
+ * @returns {*|PromiseLike<T | never>|Promise<T | never>}
+ */
+export function addCard({ deckId, question, answer }){
+    return this.getDeck(deckId)
+        .then((deck) => {
+            const updatedDeck = {
+                [deck.title]: {
+                    ...deck,
+                    questions: [
+                        ...deck.questions,
+                        {
+                            question,
+                            answer
+                        }
+                    ]
+                }
+            };
+
+            return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(updatedDeck))
+                .then(() => this.getDeck(deckId)).then( (deck) => deck);
+        });
 }
