@@ -32,7 +32,7 @@ class AddCard extends React.Component {
     const { question, answer } = this.state;
     const { deckId } = this.props;
 
-    if(!(question.length && answer.length)){
+    if(!(question.trim().length && answer.trim().length)){
       return;
     }
 

@@ -7,6 +7,7 @@ import { StatusBar, StyleSheet, View } from 'react-native';
 import { Provider } from 'react-redux';
 import reducer from './reducers';
 import { createStore } from 'redux';
+import { clearLocalNotification, setLocalNotification } from "./utils/notifications";
 
 const store = createStore(reducer, middleware);
 
@@ -22,7 +23,10 @@ export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
   };
-
+  componentDidMount() {
+    //clearLocalNotification();
+    setLocalNotification();
+  }
   render() {
     if (!(this.state.isLoadingComplete || this.props.skipLoadingScreen)) {
       return (

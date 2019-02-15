@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native';
 import { getOrCreateDecks, DECKS_STORAGE_KEY } from './_decks';
+import { setLocalNotification, clearLocalNotification } from "./notifications";
 
 export function getDecks () {
     //AsyncStorage.clear();
@@ -68,6 +69,9 @@ export function nextCard ( { deckId, nextIndex, correct } ) {
             if(cardIndex >= deck.questions.length){
                 cardIndex = 0;
                 complete = true;
+
+                clearLocalNotification()
+                    .then(setLocalNotification);
             }
 
             const updatedDeck = {
@@ -139,7 +143,7 @@ export function addDeck({ title }){
     };
 
     return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(newDeck))
-        .then(() => this.getDeck(title)).then( (deck) => deck);
+        .then(() => this.getDeck(title)).then( (deck) => deck );
 }
 
 /**

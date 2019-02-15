@@ -38,8 +38,14 @@ class AddDeckScreen extends React.Component {
   }
   handleSubmit(){
     const title = this.state.text;
+
+    if(!(title.trim().length)){
+      return;
+    }
+
     this.props.dispatch(addDeck({ title }))
         .then((deck) => {
+          this.setState({text: ''});
           const deckId = title;
           this.props.navigation.navigate(
               'DeckView',

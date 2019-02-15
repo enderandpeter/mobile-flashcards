@@ -38,9 +38,9 @@ class DeckScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={this.props.decks ? null : styles.centered}>
+        <ScrollView style={styles.container} contentContainerStyle={Object.keys(this.props.decks).length !== 0 ? null : styles.centered}>
             {
-              this.props.decks ?
+              Object.keys(this.props.decks).length !== 0 ?
                     Object.keys(this.props.decks).sort().map((deckId) => {
                       const numOfCards = this.props.decks[deckId].questions
                           ?

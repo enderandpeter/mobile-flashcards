@@ -4,6 +4,7 @@ export const DECKS_STORAGE_KEY = 'MobileFlashCards:Deck';
 
 function setDummyData () {
     let dummyData = {
+        /*
         React: {
             title: 'React',
             questions: [
@@ -37,7 +38,8 @@ function setDummyData () {
                 score: 0,
                 complete: false
             }
-        }
+
+        }*/
     };
 
     AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(dummyData));
