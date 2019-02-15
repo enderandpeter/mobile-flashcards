@@ -4,7 +4,6 @@ import TabBarIcon from '../components/TabBarIcon';
 import Colors from '../constants/Colors';
 import React, { Component } from 'react';
 import {
-  AsyncStorage,
   ScrollView,
   StyleSheet,
   Text,
@@ -40,7 +39,6 @@ class DeckScreen extends Component {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={this.props.decks ? null : styles.centered}>
-          <View>
             {
               this.props.decks ?
                     Object.keys(this.props.decks).sort().map((deckId) => {
@@ -65,7 +63,6 @@ class DeckScreen extends Component {
               :
                   <Text>Press <Text style={{fontStyle: 'italic'}}>Add Deck</Text> to add a deck!</Text>
             }
-          </View>
         </ScrollView>
       </View>
     );

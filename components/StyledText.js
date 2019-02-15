@@ -50,7 +50,13 @@ export class ScoreText extends Component {
   }
 }
 
-const styles = StyleSheet.create({
+export class AddDeckHeaderText extends Component {
+  render() {
+    return <Text {...this.props} style={[this.props.style, styles.addDeckHeaderText]} />;
+  }
+}
+
+export const styles = StyleSheet.create({
   itemHeading: {
     fontSize: 30
   },
@@ -60,6 +66,22 @@ const styles = StyleSheet.create({
   },
   largeButtonText: {
     fontSize: 30
+  },
+  largeButton: {
+    borderRadius: 16,
+    padding: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowRadius: 3,
+    shadowOpacity: 0.8,
+    shadowColor: 'rgba(0, 0, 0, 0.24)',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    }
   },
   questionAndAnswer: {
     fontSize: 25,
@@ -74,5 +96,9 @@ const styles = StyleSheet.create({
   scoreText: {
     fontSize: 72,
     color: Colors.scoreColor
+  },
+  addDeckHeaderText: {
+    fontSize: 30,
+    paddingBottom: 20
   }
 });
