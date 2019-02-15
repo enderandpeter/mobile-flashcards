@@ -17,10 +17,7 @@ export const getDecks = () => (
     (dispatch) => {
         return API.getDecks()
             .then((decks) => {
-                /*
-                `decks` will be string data from AsyncStorage
-                 */
-                dispatch(getDecksAction(JSON.parse(decks)));
+                dispatch(getDecksAction(decks));
             });
     }
 );
@@ -47,6 +44,7 @@ export const flipCard = ({ deckId, side }) => (
  *
  * @param deckId
  * @param nextIndex An optional specified card (question) index
+ * @param correct Whether or not the user answered correctly
  * @returns {Function}
  */
 export const nextCard = ({ deckId, nextIndex, correct }) => (
@@ -58,8 +56,13 @@ export const nextCard = ({ deckId, nextIndex, correct }) => (
                 return deck;
             });
     }
-)
+);
 
+/**
+ *
+ * @param deckId
+ * @returns {function(*): (*|PromiseLike<T | never>|Promise<T | never>)}
+ */
 export const restartQuiz = ({ deckId }) => (
     (dispatch) => {
         return API.restartQuiz({ deckId })
@@ -69,4 +72,15 @@ export const restartQuiz = ({ deckId }) => (
                 return deck;
             });
     }
-)
+);
+
+export const addDeck = ({ title }) => (
+    (dispatch) => {
+        return API.addDeck({ title })
+            .then((deck) => {
+                dispatch(updateDeckAction(deck));
+
+                return deck;
+            });
+    }
+);

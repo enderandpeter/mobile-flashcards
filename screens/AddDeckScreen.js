@@ -9,9 +9,11 @@ import {
   View,
   TouchableOpacity
 } from 'react-native';
+import { connect } from 'react-redux';
 import { AddDeckHeaderText, LargeButtonText } from "../components/StyledText";
+import { addDeck } from "../actions/decks";
 
-export default class AddDeckScreen extends React.Component {
+class AddDeckScreen extends React.Component {
   static navigationOptions = {
     title: 'Add Deck',
     tabBarLabel: 'Add Deck',
@@ -34,6 +36,17 @@ export default class AddDeckScreen extends React.Component {
       };
     });
   }
+  handleSubmit(){
+    const title = this.state.text;
+    this.props.dispatch(addDeck({ title }))
+        .then((deck) => {
+          const deckId = title;
+          this.props.navigation.navigate(
+              'DeckView',
+              { deckId }
+          );
+    });
+  }
   render() {
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.center}>
@@ -47,13 +60,18 @@ export default class AddDeckScreen extends React.Component {
               style={styles.textInput}
           />
         </View>
-        <TouchableOpacity style={textStyles.largeButton}>
+        <TouchableOpacity
+            style={textStyles.largeButton}
+            onPress={this.handleSubmit.bind(this)}
+        >
           <LargeButtonText>Submit</LargeButtonText>
         </TouchableOpacity>
       </ScrollView>
     );
   }
 }
+
+export default connect()(AddDeckScreen);
 
 const styles = StyleSheet.create({
   container: {

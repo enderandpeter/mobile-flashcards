@@ -48,5 +48,5 @@ function setDummyData () {
 export function getOrCreateDecks (decks) {
     return decks === null
         ? setDummyData()
-        : decks;
+        : JSON.parse(decks);
 }

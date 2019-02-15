@@ -40,8 +40,16 @@ class DeckView extends Component {
     }
 }
 
-const mapStateToProps = (state, { navigation }) => {
-    const { deckId, numOfCards, cardsNoun } = navigation.state.params;
+const mapStateToProps = ({ decks }, { navigation }) => {
+    const { deckId } = navigation.state.params;
+
+    const numOfCards = decks[deckId].questions
+        ?
+        decks[deckId].questions.length
+        :
+        0;
+
+    const cardsNoun = numOfCards === 1 ? 'card' : 'cards';
 
     return {
         deckId,

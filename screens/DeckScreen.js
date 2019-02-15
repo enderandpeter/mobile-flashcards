@@ -52,7 +52,7 @@ class DeckScreen extends Component {
                       return <TouchableOpacity
                                 style={styles.item}
                                 key={deckId}
-                                onPress={this.handleDeckClick.bind(this, { deckId, numOfCards, cardsNoun })}
+                                onPress={this.handleDeckClick.bind(this, { deckId })}
                              >
                           <View style={{alignItems: 'center'}}>
                             <DeckHeadingText>{deckId}</DeckHeadingText>
