@@ -149,6 +149,27 @@ export function addDeck({ title }){
 /**
  *
  * @param deckId
+ * @returns {*|PromiseLike<T | never>|Promise<T | never>}
+ */
+export function deleteDeck({ deckId }){
+    return this.getDeck(deckId)
+        .then((deck) => {
+            if(!deck){
+                return;
+            }
+            // The item exists, so let's remove it
+            return this.getDecks()
+                .then((decks) => {
+                    delete decks[deckId];
+                    return AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks))
+                        .then(() => deck);
+                });
+    });
+}
+
+/**
+ *
+ * @param deckId
  * @param question
  * @param answer
  * @returns {*|PromiseLike<T | never>|Promise<T | never>}

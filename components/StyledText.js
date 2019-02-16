@@ -62,6 +62,12 @@ export class AddCardHeaderText extends Component {
   }
 }
 
+export class DeleteDeckText extends Component {
+  render() {
+    return <Text {...this.props} style={[this.props.style, styles.deleteDeckText]} />;
+  }
+}
+
 export const styles = StyleSheet.create({
   itemHeading: {
     fontSize: 30
@@ -113,5 +119,9 @@ export const styles = StyleSheet.create({
     fontSize: 30,
     paddingBottom: 20,
     textAlign: 'center'
+  },
+  deleteDeckText: {
+    fontSize: 20,
+    color: Colors.deleteDeckColor
   }
 });

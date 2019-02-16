@@ -11,6 +11,7 @@ import {
   View,
 } from 'react-native';
 import { connect } from 'react-redux';
+import { withNavigationFocus } from "react-navigation";
 
 class DeckScreen extends Component {
   static navigationOptions = {
@@ -26,6 +27,14 @@ class DeckScreen extends Component {
 
   componentDidMount() {
     this.props.dispatch(getDecks());
+
+    this.focusListener = this.props.navigation.addListener("didFocus", () => {
+        // Delete a deck if there was a request to do so
+        if(this.props.navigation.state.params &&
+            this.props.navigation.state.params.deleteDeck){
+          this.props.navigation.state.params.deleteDeck();
+        }
+    });
   }
 
   handleDeckClick( deckData ) {
@@ -75,7 +84,7 @@ function mapStateToProps({decks}) {
   };
 }
 
-export default connect(mapStateToProps)(DeckScreen);
+export default connect(mapStateToProps)(withNavigationFocus(DeckScreen));
 
 const styles = StyleSheet.create({
   container: {

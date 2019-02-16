@@ -2,6 +2,7 @@ import * as API from '../utils/api';
 
 export const GET_DECKS = 'GET_DECKS';
 export const UPDATE_DECK = 'UPDATE_DECK';
+export const DELETE_DECK = 'DELETE_DECK';
 
 export const getDecksAction = (decks) => ({
     type: GET_DECKS,
@@ -10,6 +11,11 @@ export const getDecksAction = (decks) => ({
 
 export const updateDeckAction = (deck) => ({
     type: UPDATE_DECK,
+    deck,
+});
+
+export const deleteDeckAction = (deck) => ({
+    type: DELETE_DECK,
     deck,
 });
 
@@ -84,6 +90,22 @@ export const addDeck = ({ title }) => (
         return API.addDeck({ title })
             .then((deck) => {
                 dispatch(updateDeckAction(deck));
+
+                return deck;
+            });
+    }
+);
+
+/**
+ *
+ * @param deckId
+ * @returns {function(*): PromiseLike<T | never | never>}
+ */
+export const deleteDeck = ({ deckId }) => (
+    (dispatch) => {
+        return API.deleteDeck({ deckId })
+            .then((deck) => {
+                dispatch(deleteDeckAction(deck));
 
                 return deck;
             });
