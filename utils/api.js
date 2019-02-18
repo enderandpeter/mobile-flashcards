@@ -230,3 +230,28 @@ export function updateCard({ deckId, cardIndex, question, answer, id }){
                 .then(() => this.getDeck(deckId)).then( (deck) => deck);
         });
 }
+
+/**
+ *
+ * @param deckId
+ * @param id
+ * @returns {*|PromiseLike<T | never>|Promise<T | never>}
+ */
+export function deleteCard({ deckId, id }){
+    return this.getDeck(deckId)
+        .then((deck) => {
+
+
+            const updatedDeck = {
+                [deck.title]: {
+                    ...deck,
+                    questions: [
+                        ...deck.questions.filter((card) => card.id !== id)
+                    ]
+                }
+            };
+
+            return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(updatedDeck))
+                .then(() => this.getDeck(deckId)).then( (deck) => deck);
+        });
+}

@@ -148,3 +148,20 @@ export const updateCard = ({ deckId, question, answer, id, cardIndex }) => (
             });
     }
 );
+
+/**
+ *
+ * @param deckId
+ * @param id
+ * @returns {function(*): (PromiseLike<T | never> | Promise<T | never>)}
+ */
+export const deleteCard = ({ deckId, id }) => (
+    (dispatch) => {
+        return API.deleteCard ({ deckId, id })
+            .then((deck) => {
+                dispatch(updateDeckAction(deck));
+
+                return deck;
+            });
+    }
+);

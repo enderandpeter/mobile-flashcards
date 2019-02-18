@@ -73,44 +73,46 @@ class DeckView extends Component {
         );
     }
     render(){
-        return <View style={styles.container}>
-            <DeckPageHeadingText>{this.props.deckId}</DeckPageHeadingText>
-            <Text>{`${this.props.numOfCards} ${this.props.cardsNoun}`}</Text>
-            <View>
-                <TouchableOpacity
-                    style={[textStyles.largeButton, {backgroundColor: Colors.addCardBackground}]}
-                    onPress={this.handleAddCardClick.bind(this)}
-                >
-                    <LargeButtonText>Add Card</LargeButtonText>
-                </TouchableOpacity>
-                {
-                    this.props.numOfCards ? <TouchableOpacity
-                        style={[styles.largeButton, {backgroundColor: Colors.startQuizBackground}]}
-                        onPress={this.handleStartQuizClick.bind(this)}
-                    >
-                        <LargeButtonText>Start Quiz</LargeButtonText>
-                    </TouchableOpacity> : null
-                }
-            </View>
-            <View style={{flexGrow: 0.25}}></View>
-            {
-                this.props.numOfCards > 0 ? (
+        return (
+            <View style={styles.container}>
+                <DeckPageHeadingText>{this.props.deckId}</DeckPageHeadingText>
+                <Text>{`${this.props.numOfCards} ${this.props.cardsNoun}`}</Text>
+                <View>
                     <TouchableOpacity
-                        style={[textStyles.editCardsText, styles.bottom]}
-                        onPress={this.handleEditCard.bind(this)}
+                        style={[textStyles.largeButton, {backgroundColor: Colors.addCardBackground}]}
+                        onPress={this.handleAddCardClick.bind(this)}
                     >
-                        <EditCardsText>Edit Cards</EditCardsText>
+                        <LargeButtonText>Add Card</LargeButtonText>
                     </TouchableOpacity>
-                ) : null
-            }
-            <View style={{flexGrow: 0.25}}></View>
-            <TouchableOpacity
-                style={[textStyles.deleteDeckText, styles.bottom]}
-                onPress={this.handlePromptDeleteDeck.bind(this)}
-            >
-                <DeleteDeckText>Delete Deck</DeleteDeckText>
-            </TouchableOpacity>
-        </View>;
+                    {
+                        this.props.numOfCards ? <TouchableOpacity
+                            style={[styles.largeButton, {backgroundColor: Colors.startQuizBackground}]}
+                            onPress={this.handleStartQuizClick.bind(this)}
+                        >
+                            <LargeButtonText>Start Quiz</LargeButtonText>
+                        </TouchableOpacity> : null
+                    }
+                </View>
+                <View style={{flexGrow: 0.25}}></View>
+                {
+                    this.props.numOfCards > 0 ? (
+                        <TouchableOpacity
+                            style={[textStyles.editCardsText, styles.bottom]}
+                            onPress={this.handleEditCard.bind(this)}
+                        >
+                            <EditCardsText>Edit Cards</EditCardsText>
+                        </TouchableOpacity>
+                    ) : null
+                }
+                <View style={{flexGrow: 0.25}}></View>
+                <TouchableOpacity
+                    style={[textStyles.deleteDeckText, styles.bottom]}
+                    onPress={this.handlePromptDeleteDeck.bind(this)}
+                >
+                    <DeleteDeckText>Delete Deck</DeleteDeckText>
+                </TouchableOpacity>
+            </View>
+        );
     }
 }
 
@@ -158,9 +160,5 @@ const styles = StyleSheet.create({
             width: 0,
             height: 3
         }
-    },
-    bottom: {
-        justifyContent: 'flex-end',
-        //height: '50%'
     }
 });

@@ -2,15 +2,20 @@ import { styles as textStyles } from '../components/StyledText';
 import { CARD_MAX_LENGTH } from '../constants/Validation';
 import React from 'react';
 import {
-  ScrollView,
+  Text,
   StyleSheet,
   TextInput,
   View,
+  ScrollView,
   TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
-import { AddCardHeaderText, LargeButtonText } from "../components/StyledText";
-import { addCard, updateCard } from "../actions/decks";
+import {
+  AddCardHeaderText,
+  LargeButtonText,
+  DeleteCardText
+} from "../components/StyledText";
+import { addCard, updateCard, deleteCard } from "../actions/decks";
 
 class AddCard extends React.Component {
   static navigationOptions = ({navigation}) => ({
@@ -18,7 +23,7 @@ class AddCard extends React.Component {
   });
   state = {question: '', answer: ''}
   constructor(props){
-    super(props)
+    super(props);
     this.state = {
       question : this.props.question ? this.props.question : '',
       answer : this.props.answer ? this.props.answer : ''
@@ -62,36 +67,53 @@ class AddCard extends React.Component {
           });
     }
   }
+  handleDeleteCard(){
+    const { deckId, id } = this.props;
+
+    this.props.dispatch(deleteCard({ deckId, id }))
+        .then((deck) => {
+          this.props.navigation.goBack();
+        });
+  }
   render() {
     return (
-      <ScrollView style={styles.container} contentContainerStyle={styles.center}>
-        <AddCardHeaderText>Enter Card Question and Answer</AddCardHeaderText>
-        <View style={styles.textInputContainer}>
-          <TextInput
-              maxLength={CARD_MAX_LENGTH}
-              value={this.state.question ? this.state.question : this.props.question}
-              onChangeText={(text) => this.handleTextChange.bind(this, {type: 'question', text})()}
-              autoFocus={true}
-              style={styles.textInput}
-              placeholder='Question'
-          />
-        </View>
-        <View style={styles.textInputContainer}>
-          <TextInput
-              maxLength={CARD_MAX_LENGTH}
-              value={this.state.answer ? this.state.answer : this.props.answer}
-              onChangeText={(text) => this.handleTextChange.bind(this, {type: 'answer', text})()}
-              style={styles.textInput}
-              placeholder='Answer'
-          />
-        </View>
-        <TouchableOpacity
-            style={textStyles.largeButton}
-            onPress={this.handleSubmit.bind(this)}
-        >
-          <LargeButtonText>Submit</LargeButtonText>
-        </TouchableOpacity>
+        <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.center}>
+          <AddCardHeaderText>Enter Card Question and Answer</AddCardHeaderText>
+          <View style={styles.textInputContainer}>
+            <TextInput
+                maxLength={CARD_MAX_LENGTH}
+                value={this.state.question ? this.state.question : this.props.question}
+                onChangeText={(text) => this.handleTextChange.bind(this, {type: 'question', text})()}
+                autoFocus={true}
+                style={styles.textInput}
+                placeholder='Question'
+            />
+          </View>
+          <View style={styles.textInputContainer}>
+            <TextInput
+                maxLength={CARD_MAX_LENGTH}
+                value={this.state.answer ? this.state.answer : this.props.answer}
+                onChangeText={(text) => this.handleTextChange.bind(this, {type: 'answer', text})()}
+                style={styles.textInput}
+                placeholder='Answer'
+            />
+          </View>
+          <TouchableOpacity
+              style={textStyles.largeButton}
+              onPress={this.handleSubmit.bind(this)}
+          >
+            <LargeButtonText>Submit</LargeButtonText>
+          </TouchableOpacity>
+          <View style={{height: '50%'}}></View>
+          <TouchableOpacity
+              onPress={this.handleDeleteCard.bind(this)}
+          >
+            <DeleteCardText>Delete Card</DeleteCardText>
+          </TouchableOpacity>
       </ScrollView>
+
+        </View>
     );
   }
 }
@@ -125,10 +147,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 15,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   center: {
-    alignItems: 'center'
+    alignItems: 'center',
   },
   textInputContainer: {
     borderStyle: 'solid',

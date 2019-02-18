@@ -68,6 +68,12 @@ export class DeleteDeckText extends Component {
   }
 }
 
+export class DeleteCardText extends Component {
+  render() {
+    return <Text {...this.props} style={[this.props.style, styles.deleteCardText]} />;
+  }
+}
+
 export class EditCardsText extends Component {
   render() {
     return <Text {...this.props} style={[this.props.style, styles.editCardsText]} />;
@@ -129,6 +135,10 @@ export const styles = StyleSheet.create({
   deleteDeckText: {
     fontSize: 20,
     color: Colors.deleteDeckColor
+  },
+  deleteCardText: {
+    fontSize: 20,
+    color: Colors.deleteCardColor
   },
   editCardsText: {
     fontSize: 20,

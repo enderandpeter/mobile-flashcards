@@ -1,3 +1,4 @@
+import { deleteCard } from "../actions/decks";
 import React, { Component } from 'react';
 import {
     ScrollView,
@@ -14,7 +15,11 @@ class CardScreen extends Component {
         const { deckId } = this.props;
         this.props.navigation.navigate(
             'AddCard',
-            { deckId, cardIndex }
+            {
+                deckId,
+                cardIndex,
+                deleteCard: (id) => { this.props.dispatch(deleteCard({ deckId, id}));}
+            }
         );
     }
     render(){

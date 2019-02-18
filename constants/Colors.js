@@ -28,5 +28,6 @@ export default {
   incorrectButtonBackground: red,
   scoreColor: green,
   deleteDeckColor: red,
+  deleteCardColor: red,
   editCardsColor: green,
 };
