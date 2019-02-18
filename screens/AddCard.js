@@ -7,7 +7,8 @@ import {
   TextInput,
   View,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
@@ -15,7 +16,7 @@ import {
   LargeButtonText,
   DeleteCardText
 } from "../components/StyledText";
-import { addCard, updateCard, deleteCard } from "../actions/decks";
+import { addCard, updateCard, deleteCard, deleteDeck } from "../actions/decks";
 
 class AddCard extends React.Component {
   static navigationOptions = ({navigation}) => ({
@@ -70,10 +71,28 @@ class AddCard extends React.Component {
   handleDeleteCard(){
     const { deckId, id } = this.props;
 
-    this.props.dispatch(deleteCard({ deckId, id }))
-        .then((deck) => {
-          this.props.navigation.goBack();
-        });
+    Alert.alert(
+        'Delete this card?',
+        `Would you like to delete this card?`,
+        [
+          {
+            text: 'Yes',
+            onPress: () => {
+              this.props.dispatch(deleteCard({ deckId, id }))
+                  .then((deck) => {
+                    this.props.navigation.goBack();
+                  });
+            }
+          },
+          {
+            text: 'Cancel',
+            onPress: () => {
+              // Do nothing
+            },
+            style: 'cancel'
+          }
+        ]
+    );
   }
   render() {
     return (
