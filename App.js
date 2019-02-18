@@ -7,7 +7,13 @@ import { StatusBar, StyleSheet, View } from 'react-native';
 import { Provider } from 'react-redux';
 import reducer from './reducers';
 import { createStore } from 'redux';
+import Sentry from 'sentry-expo';
 import { clearLocalNotification, setLocalNotification } from "./utils/notifications";
+
+// Remove this once Sentry is correctly setup.
+Sentry.enableInExpoDevelopment = true;
+
+Sentry.config('https://4b0c188963b946f2b061cd1989d9d265@sentry.io/1396656').install();
 
 const store = createStore(reducer, middleware);
 

@@ -5,6 +5,7 @@ import shortid from 'shortid';
 
 export function getDecks () {
     //AsyncStorage.clear();
+    //throw new Error('There was some crazy error');
     return AsyncStorage.getItem(DECKS_STORAGE_KEY)
         .then((decks) => getOrCreateDecks(decks));
 }
