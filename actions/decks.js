@@ -129,3 +129,22 @@ export const addCard = ({ deckId, question, answer }) => (
             });
     }
 );
+
+/**
+ *
+ * @param deckId
+ * @param question
+ * @param answer
+ * @param id
+ * @returns {function(*): (PromiseLike<T | never> | Promise<T | never>)}
+ */
+export const updateCard = ({ deckId, question, answer, id, cardIndex }) => (
+    (dispatch) => {
+        return API.updateCard({ deckId, question, answer, id, cardIndex })
+            .then((deck) => {
+                dispatch(updateDeckAction(deck));
+
+                return deck;
+            });
+    }
+);

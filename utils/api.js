@@ -1,6 +1,7 @@
-import { AsyncStorage } from 'react-native';
 import { getOrCreateDecks, DECKS_STORAGE_KEY } from './_decks';
 import { setLocalNotification, clearLocalNotification } from "./notifications";
+import { AsyncStorage } from 'react-native';
+import shortid from 'shortid';
 
 export function getDecks () {
     //AsyncStorage.clear();
@@ -184,8 +185,43 @@ export function addCard({ deckId, question, answer }){
                         ...deck.questions,
                         {
                             question,
-                            answer
+                            answer,
+                            id: shortid.generate()
                         }
+                    ]
+                }
+            };
+
+            return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(updatedDeck))
+                .then(() => this.getDeck(deckId)).then( (deck) => deck);
+        });
+}
+
+/**
+ *
+ * @param deckId
+ * @param cardIndex
+ * @param question
+ * @param answer
+ * @param id
+ * @returns {*|PromiseLike<T | never>|Promise<T | never>}
+ */
+export function updateCard({ deckId, cardIndex, question, answer, id }){
+    return this.getDeck(deckId)
+        .then((deck) => {
+
+
+            const updatedDeck = {
+                [deck.title]: {
+                    ...deck,
+                    questions: [
+                        ...deck.questions.slice(0, cardIndex),
+                        {
+                            question,
+                            answer,
+                            id
+                        },
+                        ...deck.questions.slice(cardIndex + 1)
                     ]
                 }
             };

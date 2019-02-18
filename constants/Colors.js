@@ -1,5 +1,7 @@
 const tintColor = '#2f95dc';
+const green = 'green';
 const red = 'red';
+const white = 'white';
 
 export default {
   tintColor,
@@ -7,23 +9,24 @@ export default {
   tabIconSelected: tintColor,
   tabBar: '#fefefe',
   errorBackground: red,
-  errorText: '#fff',
+  errorText: white,
   warningBackground: '#EAEB5E',
   warningText: '#666804',
   noticeBackground: tintColor,
-  noticeText: '#fff',
+  noticeText: white,
   statusBar: '#00f',
-  headerTintColor: '#fff',
+  headerTintColor: white,
   headerStyle: {
     backgroundColor: '#00f',
   },
-  itemBackground: '#fff',
-  addCardBackground: 'white',
+  itemBackground: white,
+  addCardBackground: white,
   startQuizBackground: 'lightblue',
-  startQuizText: 'white',
+  startQuizText: white,
   flipCardText: red,
-  correctButtonBackground: 'green',
+  correctButtonBackground: green,
   incorrectButtonBackground: red,
-  scoreColor: 'green',
+  scoreColor: green,
   deleteDeckColor: red,
+  editCardsColor: green,
 };

@@ -2,7 +2,8 @@ import {
     DeckPageHeadingText,
     LargeButtonText,
     DeleteDeckText,
-    styles as textStyles
+    EditCardsText,
+    styles as textStyles,
 } from '../components/StyledText';
 import Colors from '../constants/Colors';
 import React, { Component } from 'react';
@@ -64,6 +65,13 @@ class DeckView extends Component {
             ]
         );
     }
+    handleEditCard(){
+        const { deckId } = this.props;
+        this.props.navigation.navigate(
+            'CardScreen',
+            { deckId }
+        );
+    }
     render(){
         return <View style={styles.container}>
             <DeckPageHeadingText>{this.props.deckId}</DeckPageHeadingText>
@@ -84,7 +92,18 @@ class DeckView extends Component {
                     </TouchableOpacity> : null
                 }
             </View>
-            <View style={{flexGrow: 0.5}}></View>
+            <View style={{flexGrow: 0.25}}></View>
+            {
+                this.props.numOfCards > 0 ? (
+                    <TouchableOpacity
+                        style={[textStyles.editCardsText, styles.bottom]}
+                        onPress={this.handleEditCard.bind(this)}
+                    >
+                        <EditCardsText>Edit Cards</EditCardsText>
+                    </TouchableOpacity>
+                ) : null
+            }
+            <View style={{flexGrow: 0.25}}></View>
             <TouchableOpacity
                 style={[textStyles.deleteDeckText, styles.bottom]}
                 onPress={this.handlePromptDeleteDeck.bind(this)}

@@ -46,34 +46,32 @@ class DeckScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={Object.keys(this.props.decks).length !== 0 ? null : styles.centered}>
-            {
-              Object.keys(this.props.decks).length !== 0 ?
-                    Object.keys(this.props.decks).sort().map((deckId) => {
-                      const numOfCards = this.props.decks[deckId].questions
-                          ?
-                            this.props.decks[deckId].questions.length
-                          :
-                            0;
 
-                      const cardsNoun = numOfCards === 1 ? 'card' : 'cards';
-                      return <TouchableOpacity
-                                style={styles.item}
-                                key={deckId}
-                                onPress={this.handleDeckClick.bind(this, { deckId })}
-                             >
-                          <View style={{alignItems: 'center'}}>
-                            <DeckHeadingText>{deckId}</DeckHeadingText>
-                            <Text>{`${numOfCards} ${cardsNoun}`}</Text>
-                          </View>
-                        </TouchableOpacity>;
-                    })
-              :
-                  <Text>Press <Text style={{fontStyle: 'italic'}}>Add Deck</Text> to add a deck!</Text>
-            }
+          {
+            Object.keys(this.props.decks).length !== 0 ?
+                Object.keys(this.props.decks).sort().map((deckId) => {
+                  const numOfCards = this.props.decks[deckId].questions ?
+                      this.props.decks[deckId].questions.length
+                  :
+                      0;
+
+                  const cardsNoun = numOfCards === 1 ? 'card' : 'cards';
+                  return <TouchableOpacity
+                      style={styles.item}
+                      key={deckId}
+                      onPress={this.handleDeckClick.bind(this, { deckId })}
+                  >
+                    <View style={{alignItems: 'center'}}>
+                      <DeckHeadingText>{deckId}</DeckHeadingText>
+                      <Text>{`${numOfCards} ${cardsNoun}`}</Text>
+                    </View>
+                  </TouchableOpacity>;
+                })
+            :
+                <Text>Press <Text style={{fontStyle: 'italic'}}>Add Deck</Text> to add a deck!</Text>
+          }
         </ScrollView>
-      </View>
     );
   }
 }
