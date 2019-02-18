@@ -3,7 +3,7 @@ import {
     LargeButtonText,
     DeleteDeckText,
     EditCardsText,
-    styles as textStyles,
+    styles as textStyles, RenameDeckText,
 } from '../components/StyledText';
 import Colors from '../constants/Colors';
 import React, { Component } from 'react';
@@ -72,10 +72,22 @@ class DeckView extends Component {
             { deckId }
         );
     }
+    handleRenameDeck(){
+        const { deckId } = this.props;
+        this.props.navigation.navigate(
+            'DeckAdd',
+            { deckId }
+        );
+    }
     render(){
         return (
             <View style={styles.container}>
-                <DeckPageHeadingText>{this.props.deckId}</DeckPageHeadingText>
+                <View style={{height: '15%', marginTop: '5%', alignItems: 'center'}}>
+                    <TouchableOpacity onPress={this.handleRenameDeck.bind(this)}>
+                        <RenameDeckText>Rename</RenameDeckText>
+                    </TouchableOpacity>
+                    <DeckPageHeadingText>{this.props.deckId}</DeckPageHeadingText>
+                </View>
                 <Text>{`${this.props.numOfCards} ${this.props.cardsNoun}`}</Text>
                 <View>
                     <TouchableOpacity

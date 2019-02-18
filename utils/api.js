@@ -149,6 +149,26 @@ export function addDeck({ title }){
 
 /**
  *
+ * @param deckId The ID of the deck being replaced
+ * @param title The new title
+ * @returns {PromiseLike<T | never> | Promise<T | never>}
+ */
+export function updateDeck({ deckId, title }){
+    return this.deleteDeck({ deckId })
+        .then((deck) => {
+            const newDeck = {
+                [title]: {
+                    ...deck,
+                    title
+                }
+            };
+            return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(newDeck))
+                .then(() => this.getDecks()).then( (decks) => decks );
+        });
+}
+
+/**
+ *
  * @param deckId
  * @returns {*|PromiseLike<T | never>|Promise<T | never>}
  */
@@ -158,12 +178,14 @@ export function deleteDeck({ deckId }){
             if(!deck){
                 return;
             }
+
+            const deletedDeck = { ...deck };
             // The item exists, so let's remove it
             return this.getDecks()
                 .then((decks) => {
                     delete decks[deckId];
                     return AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks))
-                        .then(() => deck);
+                        .then(() => deletedDeck);
                 });
     });
 }

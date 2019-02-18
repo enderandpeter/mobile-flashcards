@@ -98,6 +98,23 @@ export const addDeck = ({ title }) => (
 
 /**
  *
+ * @param deckId The ID of the deck being replaced
+ * @param title The new title
+ * @returns {function(*): (PromiseLike<T | never> | Promise<T | never>)}
+ */
+export const updateDeck = ({ deckId, title }) => (
+    (dispatch) => {
+        return API.updateDeck({ deckId, title })
+            .then((decks) => {
+                dispatch(getDecksAction(decks));
+
+                return decks;
+            });
+    }
+);
+
+/**
+ *
  * @param deckId
  * @returns {function(*): PromiseLike<T | never | never>}
  */

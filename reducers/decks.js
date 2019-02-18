@@ -4,7 +4,6 @@ const decks = (state = {}, action) => {
     switch(action.type) {
         case GET_DECKS :
             return {
-                ...state,
                 ...action.decks
             };
         case UPDATE_DECK :

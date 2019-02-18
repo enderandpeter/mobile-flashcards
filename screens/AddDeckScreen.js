@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { AddDeckHeaderText, LargeButtonText } from "../components/StyledText";
-import { addDeck } from "../actions/decks";
+import { addDeck, updateDeck } from "../actions/decks";
 
 class AddDeckScreen extends React.Component {
   static navigationOptions = {
@@ -25,6 +25,12 @@ class AddDeckScreen extends React.Component {
     )
   };
   state = {text: ''}
+  constructor(props){
+    super(props);
+    this.state = {
+      text: this.props.deck ? this.props.deck.title : ''
+    };
+  }
   handleTextChange(text){
     this.setState((currentState) => {
       if(text.length > DECK_NAME_MAX_LENGTH){
@@ -38,20 +44,30 @@ class AddDeckScreen extends React.Component {
   }
   handleSubmit(){
     const title = this.state.text;
+    const { deckId } = this.props;
 
     if(!(title.trim().length)){
       return;
     }
 
-    this.props.dispatch(addDeck({ title }))
-        .then((deck) => {
-          this.setState({text: ''});
-          const deckId = title;
-          this.props.navigation.navigate(
-              'DeckView',
-              { deckId }
-          );
-    });
+    if(deckId){
+      this.props.dispatch(updateDeck({ deckId, title }))
+          .then((deck) => {
+            this.setState({text: ''});
+            this.props.navigation.goBack();
+          });
+    } else {
+      this.props.dispatch(addDeck({ title }))
+          .then((deck) => {
+            this.setState({text: ''});
+            const deckId = title;
+            this.props.navigation.navigate(
+                'DeckView',
+                { deckId }
+            );
+          });
+    }
+
   }
   render() {
     return (
@@ -60,7 +76,7 @@ class AddDeckScreen extends React.Component {
         <View style={styles.textInputContainer}>
           <TextInput
               maxLength={DECK_NAME_MAX_LENGTH}
-              value={this.state.text}
+              value={this.state.text ? this.state.text : this.props.deckId}
               onChangeText={(text) => this.handleTextChange.bind(this, text)()}
               autoFocus={true}
               style={styles.textInput}
@@ -77,7 +93,19 @@ class AddDeckScreen extends React.Component {
   }
 }
 
-export default connect()(AddDeckScreen);
+const mapStateToProps = ({ decks }, { navigation }) => {
+  let deckId = '';
+
+  if(navigation.state.params && navigation.state.params.deckId){
+    deckId = navigation.state.params.deckId;
+  }
+
+  return {
+    deckId
+  };
+}
+
+export default connect(mapStateToProps)(AddDeckScreen);
 
 const styles = StyleSheet.create({
   container: {

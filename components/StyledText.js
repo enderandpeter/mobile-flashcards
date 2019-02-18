@@ -20,6 +20,12 @@ export class DeckPageHeadingText extends Component {
   }
 }
 
+export class RenameDeckText extends Component {
+  render() {
+    return <Text {...this.props} style={[this.props.style, styles.renameDeck]} />;
+  }
+}
+
 export class LargeButtonText extends Component {
   render() {
     return <Text {...this.props} style={[this.props.style, styles.largeButtonText]} />;
@@ -86,7 +92,7 @@ export const styles = StyleSheet.create({
   },
   deckPageHeading: {
     fontSize: 42,
-    marginTop: '20%'
+    marginTop: '2%'
   },
   largeButtonText: {
     fontSize: 30
@@ -143,5 +149,8 @@ export const styles = StyleSheet.create({
   editCardsText: {
     fontSize: 20,
     color: Colors.editCardsColor
+  },
+  renameDeck: {
+    color: Colors.renameDeckColor
   }
 });

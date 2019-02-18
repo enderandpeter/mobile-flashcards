@@ -2,6 +2,7 @@ const tintColor = '#2f95dc';
 const green = 'green';
 const red = 'red';
 const white = 'white';
+const orange = 'orange';
 
 export default {
   tintColor,
@@ -30,4 +31,5 @@ export default {
   deleteDeckColor: red,
   deleteCardColor: red,
   editCardsColor: green,
+  renameDeckColor: orange
 };
