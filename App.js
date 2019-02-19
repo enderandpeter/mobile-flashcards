@@ -9,7 +9,9 @@ import reducer from './reducers';
 import { createStore } from 'redux';
 import Sentry from 'sentry-expo';
 import { clearLocalNotification, setLocalNotification } from "./utils/notifications";
-import { SENTRY_DSN } from 'react-native-dotenv';
+import config from './config';
+
+const { SENTRY_DSN } = config;
 
 // Remove this once Sentry is correctly setup.
 //Sentry.enableInExpoDevelopment = true;
