@@ -30,12 +30,14 @@
         {
           "file": "sentry-expo/upload-sourcemaps",
           "config": {
-            "organization": "Spencer Williams",
-            "project": "Mobile Flashcards",
+            "organization": "spencer-williams",
+            "project": "mobile-flashcards",
             "authToken": "38d13590c777420e83580939e30a60bd17c913c58c37414684d8da6dc4e69b1a"
           }
         }
       ]
-    }
+    },
+    "description": "A very simple mobile app for managing flash cards and creating quizzes, born from Udacity's React Nanodegree final project.",
+    "githubUrl": "https://github.com/enderandpeter/mobile-flashcards"
   }
 }
