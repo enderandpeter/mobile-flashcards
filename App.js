@@ -12,7 +12,7 @@ import { clearLocalNotification, setLocalNotification } from "./utils/notificati
 import { SENTRY_DSN } from 'react-native-dotenv';
 
 // Remove this once Sentry is correctly setup.
-Sentry.enableInExpoDevelopment = true;
+//Sentry.enableInExpoDevelopment = true;
 
 Sentry.config(SENTRY_DSN).install();
 
