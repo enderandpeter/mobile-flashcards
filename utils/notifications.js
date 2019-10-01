@@ -15,16 +15,28 @@ function createNotification () {
     };
 }
 
+export function isNotificationEnabled () {
+    return AsyncStorage.getItem(NOTIFICATION_KEY)
+        .then(JSON.parse)
+        .then((data) => {
+            return data !== null;
+        });
+}
+
 export function clearLocalNotification () {
-    return AsyncStorage.removeItem(NOTIFICATION_KEY)
+    return Promise.resolve()
         .then(Notifications.cancelAllScheduledNotificationsAsync);
 }
 
+export function disableNotification () {
+    return AsyncStorage.removeItem(NOTIFICATION_KEY)
+        .then(this.clearLocalNotification);
+}
+
 export function setLocalNotification () {
-    AsyncStorage.getItem(NOTIFICATION_KEY)
-        .then(JSON.parse)
-        .then((data) => {
-            if (data === null) {
+    isNotificationEnabled()
+        .then((enabled) => {
+            if (!enabled) {
                 Permissions.askAsync(Permissions.NOTIFICATIONS)
                     .then(({ status }) => {
                         if (status === 'granted') {
