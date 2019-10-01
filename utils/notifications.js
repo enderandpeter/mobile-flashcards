@@ -1,4 +1,5 @@
-import { Notifications, Permissions } from 'expo';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
 import React from 'react';
 import { AsyncStorage } from 'react-native';
 
@@ -34,34 +35,41 @@ export function disableNotification () {
 }
 
 export function setLocalNotification () {
-    isNotificationEnabled()
+    return isNotificationEnabled()
         .then((enabled) => {
             if (!enabled) {
-                Permissions.askAsync(Permissions.NOTIFICATIONS)
-                    .then(({ status }) => {
-                        if (status === 'granted') {
-                            Notifications.cancelAllScheduledNotificationsAsync()
+                Permissions.getAsync(
+                    Permissions.NOTIFICATIONS
+                ).then(( status ) => {
+                    if (status !== 'granted') {
+                        Permissions.askAsync(
+                            Permissions.NOTIFICATIONS
+                        ).then(( status ) => {
+                            if( status === 'granted'){
+                                Notifications.cancelAllScheduledNotificationsAsync();
 
-                            let tomorrow = new Date()
+                                let tomorrow = new Date();
 
-                            tomorrow.setDate(tomorrow.getDate() + 1);
-                            tomorrow.setHours(10);
-                            tomorrow.setMinutes(0);
+                                tomorrow.setDate(tomorrow.getDate() + 1);
+                                tomorrow.setHours(10);
+                                tomorrow.setMinutes(0);
 
 
-                            //tomorrow.setTime(tomorrow.getTime() + 1000 * 60);
+                                //tomorrow.setTime(tomorrow.getTime() + 1000 * 60);
 
-                            Notifications.scheduleLocalNotificationAsync(
-                                createNotification(),
-                                {
-                                    time: tomorrow,
-                                    repeat: 'day',
-                                }
-                            )
+                                Notifications.scheduleLocalNotificationAsync(
+                                    createNotification(),
+                                    {
+                                        time: tomorrow,
+                                        repeat: 'day',
+                                    }
+                                )
 
-                            AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true));
-                        }
-                    });
+                                AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true));
+                            }
+                        });
+                    }
+                });
             }
         });
 }
